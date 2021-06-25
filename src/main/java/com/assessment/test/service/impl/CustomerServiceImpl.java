@@ -1,5 +1,6 @@
 package com.assessment.test.service.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -32,41 +33,50 @@ public class CustomerServiceImpl implements CustomerService {
 	private EntityManager entityManager;
 
 	@Override
-	public List<Customer> findAll() {
-		List<Customer> list = customerRepo.findAll();
-		return list;
+	public List<CustomerDto> findAll() {
+		List<CustomerDto> listCustomer = Arrays
+				.asList(new ObjectMapper().convertValue(customerRepo.findAll(), CustomerDto[].class));
+		return listCustomer;
 	}
 
 	@Override
-	public List<Customer> findWith(String name) {
-		List<Customer> list = customerRepo.findByNameContaining(name);
-		return list;
+	public List<CustomerDto> findWith(String name) {
+		List<CustomerDto> listCustomer = Arrays
+				.asList(new ObjectMapper().convertValue(customerRepo.findByNameContaining(name), CustomerDto[].class));
+		return listCustomer;
 	}
 
 	@Override
-	public List<Customer> insertCustomer(CustomerDto customerDto) {
+	public List<CustomerDto> insertCustomer(CustomerDto customerDto) {
 		Customer customer = new ObjectMapper().convertValue(customerDto, Customer.class);
 		Long customerID = customerRepo.save(customer).getCustomerID();
 
-		Warranty warranty = Warranty.builder().startDate(new Date(System.currentTimeMillis()))
-				.customerID(customerID).build();
+		Warranty warranty = Warranty.builder().startDate(new Date(System.currentTimeMillis())).customerID(customerID)
+				.build();
 		warrantyRepo.save(warranty);
 
-		return customerRepo.findAll();
+		List<CustomerDto> listCustomer = Arrays
+				.asList(new ObjectMapper().convertValue(customerRepo.findAll(), CustomerDto[].class));
+
+		return listCustomer;
 	}
 
 	@Override
-	public Customer updateCustomer(CustomerDto customerDto) {
+	public CustomerDto updateCustomer(CustomerDto customerDto) {
 		Customer customer = new ObjectMapper().convertValue(customerDto, Customer.class);
-		return customerRepo.save(customer);
+		CustomerDto latestCustomerDetail = new ObjectMapper().convertValue(customerRepo.save(customer), CustomerDto.class);
+		return latestCustomerDetail;
 	}
 
 	@Override
-	public List<Customer> findAllByPage(String page, String pageSize, String order) {
+	public List<CustomerDto> findAllByPage(String page, String pageSize, String order) {
 		PageRequest pageable = PageRequest.of(Integer.valueOf(page), Integer.valueOf(pageSize),
 				order != null && order.equalsIgnoreCase("DESC") ? Direction.fromString("DESC")
 						: Direction.fromString("ASC"),
 				"name");
-		return customerRepo.findAll(pageable).toList();
+
+		List<CustomerDto> listCustomer = Arrays
+				.asList(new ObjectMapper().convertValue(customerRepo.findAll(pageable).toList(), CustomerDto[].class));
+		return listCustomer;
 	}
 }

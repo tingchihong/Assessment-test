@@ -3,16 +3,15 @@ package com.assessment.test.service;
 import java.util.List;
 
 import com.assessment.test.dto.CustomerDto;
-import com.assessment.test.entity.Customer;
 
 public interface CustomerService {
-	List<Customer> findAll();
+	List<CustomerDto> findAll();
 
-	List<Customer> findAllByPage(String page, String pageSize, String order);
+	List<CustomerDto> findAllByPage(String page, String pageSize, String order);
 
-	List<Customer> findWith(String name);
+	List<CustomerDto> findWith(String name);
 
-	List<Customer> insertCustomer(CustomerDto customer);
+	List<CustomerDto> insertCustomer(CustomerDto customer);
 
-	Customer updateCustomer(CustomerDto customerDto);
+	CustomerDto updateCustomer(CustomerDto customerDto);
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.assessment.test.dto.CustomerDto;
 import com.assessment.test.dto.TodoDto;
-import com.assessment.test.entity.Customer;
 import com.assessment.test.service.CustomerService;
 import com.assessment.test.service.ThirdPartyService;
 import com.google.gson.Gson;
@@ -34,51 +33,51 @@ public class CustomerController {
 	private Gson gson;
 
 	@GetMapping(value = "/")
-	public List<Customer> getCustomers() {
+	public List<CustomerDto> getCustomers() {
 		logger.info("getCustomers request");
-		List<Customer> customers = customerService.findAll();
+		List<CustomerDto> customers = customerService.findAll();
 		logger.info("getCustomers response > {}", gson.toJson(customers));
 		return customers;
 	}
 
 	@GetMapping(value = "/paging")
-	public List<Customer> getCustomerByPage(@RequestParam String page, @RequestParam String pageSize,
+	public List<CustomerDto> getCustomerByPage(@RequestParam String page, @RequestParam String pageSize,
 			@RequestParam String order) {
 		logger.info("getCustomerByPage request: {}", "page: " + page + ", pageSize: " + pageSize);
 
-		List<Customer> customers = customerService.findAllByPage(page, pageSize, order);
+		List<CustomerDto> customers = customerService.findAllByPage(page, pageSize, order);
 
 		logger.info("getCustomerByPage response > {}", gson.toJson(customers));
 		return customers;
 	}
 
 	@GetMapping(value = "/get/{customerName}")
-	public List<Customer> getCustomer(@PathVariable String name) {
+	public List<CustomerDto> getCustomer(@PathVariable String name) {
 
 		logger.info("getCustomer request: {}", name);
 
-		List<Customer> customers = customerService.findWith(name);
+		List<CustomerDto> customers = customerService.findWith(name);
 
 		logger.info("getCustomer response > {}", gson.toJson(customers));
 		return customers;
 	}
 
 	@PostMapping(value = "/create", produces = "application/json")
-	public List<Customer> createCustomer(@RequestBody CustomerDto customerDto) {
+	public List<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto) {
 		logger.info("updateCustomer request > {}", gson.toJson(customerDto));
 
 		
-		List<Customer> list = customerService.insertCustomer(customerDto);
+		List<CustomerDto> list = customerService.insertCustomer(customerDto);
 
 		logger.info("createCustomer response > {}", gson.toJson(list));
 		return list;
 	}
 
 	@PutMapping(value = "/update", produces = "application/json")
-	public Customer updateCustomer(@RequestBody CustomerDto customerDto) {
+	public CustomerDto updateCustomer(@RequestBody CustomerDto customerDto) {
 		logger.info("updateCustomer request > {}", gson.toJson(customerDto));
 
-		Customer customer = customerService.updateCustomer(customerDto);
+		CustomerDto customer = customerService.updateCustomer(customerDto);
 		logger.info("updateCustomer response > {}", gson.toJson(customer));
 		return customer;
 	}
