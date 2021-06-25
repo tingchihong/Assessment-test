@@ -14,7 +14,7 @@ import com.assessment.test.dto.TodoDto;
 import com.assessment.test.service.ThirdPartyService;
 
 @Service
-public class ThirdPartyServiceImpl implements ThirdPartyService{
+public class ThirdPartyServiceImpl implements ThirdPartyService {
 
 	private static final String MOCK_API_BASE_URL = "https://jsonplaceholder.typicode.com";
 	private static final String USER_AGENT = "Spring 5 WebClient";
@@ -24,21 +24,19 @@ public class ThirdPartyServiceImpl implements ThirdPartyService{
 	private final WebClient webClient;
 
 	@Autowired
-    public ThirdPartyServiceImpl() {
-        this.webClient = WebClient.builder()
-                .baseUrl(MOCK_API_BASE_URL)
-                .defaultHeader(HttpHeaders.USER_AGENT, USER_AGENT)
-                .filter(logRequest())
-                .build();
-    }
-    public TodoDto getUser(long id) {
-        return webClient
-                .get()
-                .uri("/todos/" + id)
-                .retrieve()
-                .bodyToMono(TodoDto.class)
-                .block(REQUEST_TIMEOUT);
-    }
+	public ThirdPartyServiceImpl() {
+		this.webClient = WebClient.builder().baseUrl(MOCK_API_BASE_URL)
+				.defaultHeader(HttpHeaders.USER_AGENT, USER_AGENT).filter(logRequest()).build();
+	}
+
+	public TodoDto[] getUserList() {
+		return webClient.get().uri("/todos").retrieve().bodyToMono(TodoDto[].class).block(REQUEST_TIMEOUT);
+	}
+
+	public TodoDto getUser(long id) {
+		return webClient.get().uri("/todos/" + id).retrieve().bodyToMono(TodoDto.class).block(REQUEST_TIMEOUT);
+	}
+
 	private ExchangeFilterFunction logRequest() {
 		return (clientRequest, next) -> {
 			logger.info("Request: {} {}", clientRequest.method(), clientRequest.url());
@@ -48,4 +46,3 @@ public class ThirdPartyServiceImpl implements ThirdPartyService{
 		};
 	}
 }
-

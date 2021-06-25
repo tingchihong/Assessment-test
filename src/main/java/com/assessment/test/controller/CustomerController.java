@@ -1,7 +1,12 @@
 package com.assessment.test.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +71,6 @@ public class CustomerController {
 	public List<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto) {
 		logger.info("updateCustomer request > {}", gson.toJson(customerDto));
 
-		
 		List<CustomerDto> list = customerService.insertCustomer(customerDto);
 
 		logger.info("createCustomer response > {}", gson.toJson(list));
@@ -82,9 +86,33 @@ public class CustomerController {
 		return customer;
 	}
 
-	@GetMapping("/getMockTodo/{id}")
-	public TodoDto getMockTodo(@PathVariable String id) {
-		return thirdPartyService.getUser(Long.valueOf(id));
+	@PostMapping("/getMockTodo")
+	public String getMockTodo(HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+			JSONObject jsonResponse = new JSONObject();
+			if (request.getParameter("userId") != null) {
+				long userId = Long.valueOf(request.getParameter("userId"));
+				logger.info("getMockTodo request > {}", userId);
+				TodoDto todoDto = thirdPartyService.getUser(userId);
+				jsonResponse.put("todo", new JSONObject(gson.toJson(todoDto)));
+			} else {
+				logger.info("getMockTodo request > all");
+				TodoDto[] todoDtoList = thirdPartyService.getUserList();
+				jsonResponse.put("todoList", todoDtoList);
+			}
+
+			response.setContentType("application/json");
+			response.setHeader("Cache-Control", "no-store");
+
+			logger.info("getMockTodo response > {}", jsonResponse.toString());
+			response.getWriter().print(jsonResponse.toString());
+		} catch (IOException io) {
+			logger.error("getMockTodo exception > {}", io.getMessage());
+			io.printStackTrace();
+		}
+
+		return null;
 	}
 
 }
