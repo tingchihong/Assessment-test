@@ -25,9 +25,14 @@ java -jar target/*.jar
 You could serve MsSql locally with docker:
 
 ```
-docker run -d --name Test -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=myPassw0rd' -p 1433:1433 microsoft/mssql-server-linux
+docker run -d --name Test -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=<password>' -p 1433:1433 microsoft/mssql-server-linux
 ```
-
+Access to MsSql server and create database
+(database name TESTDB used as default in the project, you may edit it in application.properties):
+```
+mssql -u sa -p <password>
+create database <database_name>
+```
 
 ### Prerequisites
 The following items should be installed in your system:
