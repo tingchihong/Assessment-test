@@ -22,7 +22,7 @@ java -jar target/*.jar
 ```
 
 ## Database configuration
-You could start MsSql locally with whatever installer works for your OS, or with docker:
+You could serve MsSql locally with docker:
 
 ```
 docker run -d --name Test -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=myPassw0rd' -p 1433:1433 microsoft/mssql-server-linux
