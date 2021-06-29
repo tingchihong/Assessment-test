@@ -45,7 +45,7 @@ public class CustomerController {
 		return customers;
 	}
 
-	@GetMapping(value = "/paging")
+	@GetMapping(value = "/getCustomerByPage")
 	public List<CustomerDto> getCustomerByPage(@RequestParam String page, @RequestParam String pageSize,
 			@RequestParam String order) {
 		logger.info("getCustomerByPage request: {}", "page: " + page + ", pageSize: " + pageSize);
@@ -68,7 +68,7 @@ public class CustomerController {
 	}
 
 	@PostMapping(value = "/create", produces = "application/json")
-	public List<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto) {
+	public List<CustomerDto> create(@RequestBody CustomerDto customerDto) {
 		logger.info("updateCustomer request > {}", gson.toJson(customerDto));
 
 		List<CustomerDto> list = customerService.insertCustomer(customerDto);
@@ -78,7 +78,7 @@ public class CustomerController {
 	}
 
 	@PutMapping(value = "/update", produces = "application/json")
-	public CustomerDto updateCustomer(@RequestBody CustomerDto customerDto) {
+	public CustomerDto update(@RequestBody CustomerDto customerDto) {
 		logger.info("updateCustomer request > {}", gson.toJson(customerDto));
 
 		CustomerDto customer = customerService.updateCustomer(customerDto);
