@@ -39,65 +39,50 @@ public class CustomerController {
 
 	@GetMapping(value = "/")
 	public List<CustomerDto> getCustomers() {
-		logger.info("getCustomers request");
 		List<CustomerDto> customers = customerService.findAll();
-		logger.info("getCustomers response > {}", gson.toJson(customers));
 		return customers;
 	}
 
 	@GetMapping(value = "/getCustomerByPage")
 	public List<CustomerDto> getCustomerByPage(@RequestParam String page, @RequestParam String pageSize,
 			@RequestParam String order) {
-		logger.info("getCustomerByPage request: {}", "page: " + page + ", pageSize: " + pageSize);
 
 		List<CustomerDto> customers = customerService.findAllByPage(page, pageSize, order);
 
-		logger.info("getCustomerByPage response > {}", gson.toJson(customers));
 		return customers;
 	}
 
 	@GetMapping(value = "/get/{customerName}")
 	public List<CustomerDto> getCustomer(@PathVariable String name) {
 
-		logger.info("getCustomer request: {}", name);
-
 		List<CustomerDto> customers = customerService.findWith(name);
-
-		logger.info("getCustomer response > {}", gson.toJson(customers));
 		return customers;
 	}
 
 	@PostMapping(value = "/create", produces = "application/json")
 	public List<CustomerDto> create(@RequestBody CustomerDto customerDto) {
-		logger.info("updateCustomer request > {}", gson.toJson(customerDto));
-
 		List<CustomerDto> list = customerService.insertCustomer(customerDto);
 
-		logger.info("createCustomer response > {}", gson.toJson(list));
 		return list;
 	}
 
 	@PutMapping(value = "/update", produces = "application/json")
 	public CustomerDto update(@RequestBody CustomerDto customerDto) {
-		logger.info("updateCustomer request > {}", gson.toJson(customerDto));
 
 		CustomerDto customer = customerService.updateCustomer(customerDto);
-		logger.info("updateCustomer response > {}", gson.toJson(customer));
 		return customer;
 	}
 
 	@PostMapping("/getMockTodo")
 	public String getMockTodo(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		try {
 			JSONObject jsonResponse = new JSONObject();
 			if (request.getParameter("userId") != null) {
 				long userId = Long.valueOf(request.getParameter("userId"));
-				logger.info("getMockTodo request > {}", userId);
 				TodoDto todoDto = thirdPartyService.getUser(userId);
 				jsonResponse.put("todo", new JSONObject(gson.toJson(todoDto)));
 			} else {
-				logger.info("getMockTodo request > all");
 				TodoDto[] todoDtoList = thirdPartyService.getUserList();
 				jsonResponse.put("todoList", todoDtoList);
 			}
@@ -105,7 +90,6 @@ public class CustomerController {
 			response.setContentType("application/json");
 			response.setHeader("Cache-Control", "no-store");
 
-			logger.info("getMockTodo response > {}", jsonResponse.toString());
 			response.getWriter().print(jsonResponse.toString());
 		} catch (IOException io) {
 			logger.error("getMockTodo exception > {}", io.getMessage());
