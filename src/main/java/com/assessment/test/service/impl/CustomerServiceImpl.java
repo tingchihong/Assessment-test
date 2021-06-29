@@ -42,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<CustomerDto> findWith(String name) {
 		List<CustomerDto> listCustomer = Arrays
-				.asList(new ObjectMapper().convertValue(customerRepo.findByNameContaining(name), CustomerDto[].class));
+				.asList(new ObjectMapper().convertValue(customerRepo.findByNameContaining("%"+name+"%"), CustomerDto[].class));
 		return listCustomer;
 	}
 

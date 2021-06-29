@@ -1,4 +1,4 @@
-package com.assessment.test.util;
+package com.assessment.test.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Component
 @Order(1)
-public class HttpAspect {
+public class LogAspect {
 
-	private final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
+	private final static Logger logger = LoggerFactory.getLogger(LogAspect.class);
 	@Autowired
 	private Gson gson;
 

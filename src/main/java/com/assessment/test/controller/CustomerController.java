@@ -52,9 +52,8 @@ public class CustomerController {
 		return customers;
 	}
 
-	@GetMapping(value = "/get/{customerName}")
+	@GetMapping(value = { "/get/{name}" })
 	public List<CustomerDto> getCustomer(@PathVariable String name) {
-
 		List<CustomerDto> customers = customerService.findWith(name);
 		return customers;
 	}
