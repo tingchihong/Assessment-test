@@ -20,6 +20,8 @@ cd Assessment-test
 ./mvnw package
 java -jar target/*.jar
 ```
+Please note that the database needs to be online before the application build process.
+Check database configuration below to start the database server and create the database.
 
 ## Database configuration
 You could serve MsSql locally with docker:
@@ -46,4 +48,25 @@ The following items should be installed in your system:
   * [VS Code](https://code.visualstudio.com)
   
 ## API exposed
-refer [Postman Collection](https://www.getpostman.com/collections/826cafd0ccb93bf0fb68)
+refer [Postman Collection](https://www.getpostman.com/collections/cefd2cc2b63c93d3a763)
+
+The APIs exposed are using different type of HTTP methods, request parameters and responses type as a sample with different code implementations.
+HTTP methods used: 
+* GET
+* POST
+* PUT
+
+Request Parameter types used:
+* Path Parameter
+* Request Parameter
+* Request Body (Raw string with JSON format)
+* Http Servlet Request
+
+Response types used:
+* Http Servlet Response
+* Response Body
+
+# HTTP Request and Response Logging
+AspectJ is used for HTTP request and response data logging in this project.
+
+
