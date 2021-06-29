@@ -51,6 +51,7 @@ The following items should be installed in your system:
 refer [Postman Collection](https://www.getpostman.com/collections/cefd2cc2b63c93d3a763)
 
 The APIs exposed are using different type of HTTP methods, request parameters and responses type as a sample with different code implementations.
+
 HTTP methods used: 
 * GET
 * POST
@@ -66,7 +67,7 @@ Response types used:
 * Http Servlet Response
 * Response Body
 
-# HTTP Request and Response Logging
+### HTTP Request and Response Logging
 AspectJ is used for HTTP request and response data logging in this project.
 
 
