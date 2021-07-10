@@ -1,4 +1,4 @@
-# Assessment-test
+# Spring Boot Test
 
 Primary goals of the assessment are:
 * Ease of maintainability and readability
