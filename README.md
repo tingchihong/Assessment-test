@@ -15,8 +15,8 @@ You can build a jar file and run it from the command line:
 
 
 ```
-git clone https://github.com/tingchihong/Assessment-test.git
-cd Assessment-test
+git clone https://github.com/tingchihong/SpringBootTest.git
+cd SpringBootTest
 ./mvnw package
 java -jar target/*.jar
 ```
