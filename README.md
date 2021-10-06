@@ -26,8 +26,18 @@ Check database configuration below to start the database server and create the d
 ## Database configuration
 You could serve MsSql locally with docker:
 
+Mac:
 ```
 docker run -d --name Test -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=<password>' -p 1433:1433 microsoft/mssql-server-linux
+```
+Windows:
+```
+docker run -d --name Test -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<password>" -p 1433:1433 mcr.microsoft.com/mssql/server:2019-latest
+```
+
+Install sql cli for easier command control in terminal/ command prompt
+```
+npm install -g sql-cli
 ```
 Access to MsSql server and create database
 (database name TESTDB used as default in the project, you may edit it in application.properties):
